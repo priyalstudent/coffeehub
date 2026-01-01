@@ -1,21 +1,21 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const MainLayout = () => {
   return (
-    <div>
-      {/*Navbar*/}
-      <header>
-        <div>
-          <h1>CoffeHub</h1>
-        </div>
-      </header>
+    <div className="min-h-screen flex flex-col">
+      {/* Navbar */}
+      <Navbar />
 
-      <main>
+      {/* Main content */}
+      <main className="flex-1">
         <Outlet />
       </main>
 
-      <footer>© CoffeeHub — All rights reserved</footer>
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };
