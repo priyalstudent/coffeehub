@@ -63,6 +63,7 @@ const ProductDetailPage = () => {
               quantity: quantity,
             });
             setAdded(true);
+            setTimeout(() => setAdded(false), 2000);
           }}
           className="mt-6 bg-[#E6B89C] text-[#3B1F1F] px-6 py-3 rounded"
         >

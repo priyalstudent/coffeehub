@@ -1,17 +1,34 @@
+import { useState } from "react";
 import { useCart } from "../context/CartContext";
+import { Link } from "react-router-dom";
 
 const CheckoutPage = () => {
   const { cartItems, totalPrice } = useCart();
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  const handlePlaceOrder = () => {
+    setLoading(true);
+
+    setTimeout(() => {
+      setLoading(false);
+      setSuccess(true);
+    }, 2000);
+  };
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-16">
       <h1 className="text-3xl font-bold mb-8">Checkout</h1>
 
       {cartItems.length === 0 ? (
-        <p>Your cart is empty.</p>
+        <div className="max-w-6xl mx-auto px-4 py-16 text-center">
+          <h2 className="text-xl font-bold mb-2">Your cart is empty</h2>
+          <Link to="/products" className="text-[#E6B89C] underline">
+            Go back to shop
+          </Link>
+        </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {/* Order Summary */}
           <div>
             <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
 
@@ -34,7 +51,6 @@ const CheckoutPage = () => {
             </div>
           </div>
 
-          {/* Checkout Form */}
           <div>
             <h2 className="text-xl font-semibold mb-4">Billing Details</h2>
 
@@ -59,10 +75,17 @@ const CheckoutPage = () => {
 
               <button
                 type="button"
+                onClick={handlePlaceOrder}
+                disabled={loading}
                 className="w-full bg-[#E6B89C] text-[#3B1F1F] py-3 rounded font-semibold"
               >
-                Place Order
+                {loading ? "Placing order..." : "Place Order"}
               </button>
+              {success && (
+                <p className="mt-4 text-green-600 font-medium">
+                  ✅ Order placed successfully!
+                </p>
+              )}
             </form>
           </div>
         </div>

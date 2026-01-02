@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 type ProductCardProps = {
   id: number;
   name: string;
-  price: string;
+  price: number;
   image: string;
 };
 
@@ -16,7 +16,7 @@ const ProductCard = ({ id, name, price, image }: ProductCardProps) => {
 
       <div className="p-5">
         <h3 className="text-lg font-semibold">{name}</h3>
-        <p className="text-sm text-gray-600">{price}</p>
+        <p className="text-sm text-gray-600">€{price.toFixed(2)}</p>
 
         <Link
           to={`/products/${id}`}
