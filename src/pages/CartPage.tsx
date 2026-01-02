@@ -2,8 +2,13 @@ import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
 
 const CartPage = () => {
-  const { cartItems, increaseQuantity, decreaseQuantity, removeFromCart } =
-    useCart();
+  const {
+    cartItems,
+    increaseQuantity,
+    decreaseQuantity,
+    removeFromCart,
+    totalPrice,
+  } = useCart();
 
   if (cartItems.length === 0) {
     return (
@@ -12,11 +17,6 @@ const CartPage = () => {
       </div>
     );
   }
-
-  const totalPrice = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
 
   return (
     <div className="max-w-4xl mx-auto p-6">

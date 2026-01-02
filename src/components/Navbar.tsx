@@ -3,8 +3,7 @@ import { useCart } from "../context/CartContext";
 
 const Navbar = () => {
   const { cartItems } = useCart();
-
-  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+  const { cartCount } = useCart();
 
   return (
     <nav className="bg-[#3B1F1F] text-white">
