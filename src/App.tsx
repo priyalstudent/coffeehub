@@ -3,6 +3,7 @@ import MainLayout from "./layouts/MainLayout";
 
 import AboutUsPage from "./pages/AboutUsPage";
 import AdminDashboardPage from "./pages/AdminDashboardPage";
+import AdminRoute from "./routes/AdminRoute";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import ContactUsPage from "./pages/ContactUsPage";
@@ -22,9 +23,9 @@ function App() {
           <Route
             path="/admin"
             element={
-              <ProtectedRoute requireAdmin>
+              <AdminRoute>
                 <AdminDashboardPage />
-              </ProtectedRoute>
+              </AdminRoute>
             }
           />
           <Route path="/cart" element={<CartPage />} />

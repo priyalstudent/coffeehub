@@ -47,6 +47,11 @@ const Navbar = () => {
           ) : (
             <>
               <span className="text-sm">Hi, {user.name}</span>
+              {user.role === "admin" && (
+                <Link to="/admin" className="hover:text-[#E6B89C] transition">
+                  Admin
+                </Link>
+              )}
               <button onClick={logout} className="text-sm underline">
                 Logout
               </button>
