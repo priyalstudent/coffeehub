@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
 
 const Navbar = () => {
   const { cartCount } = useCart();
+  const { user, logout } = useAuth();
 
   return (
     <nav className="bg-[#3B1F1F] text-white">
@@ -28,20 +30,28 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-4 text-sm">
-          <Link to="/login" className="hover:text-[#E6B89C] transition">
-            Login
-          </Link>
-          <Link
-            to="/cart"
-            className="relative inline-flex items-center hover:text-[#E6B89C] transition"
-          >
-            <span>Cart</span>
+          <Link to="/cart">
+            Cart
             {cartCount > 0 && (
-              <span className="ml-1 flex items-center justify-center min-w-[18px] h-[18px] bg-[#E6B89C] text-black text-xs font-semibold rounded-full px-1">
+              <span className="ml-2 bg-[#E6B89C] text-black px-2 py-0.5 rounded-full text-xs">
                 {cartCount}
               </span>
             )}
           </Link>
+
+          {!user ? (
+            <>
+              <Link to="/login">Login</Link>
+              <Link to="/register">Register</Link>
+            </>
+          ) : (
+            <>
+              <span className="text-sm">Hi, {user.name}</span>
+              <button onClick={logout} className="text-sm underline">
+                Logout
+              </button>
+            </>
+          )}
         </div>
       </div>
     </nav>
