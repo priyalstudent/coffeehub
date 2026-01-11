@@ -1,22 +1,24 @@
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
-import { products } from "../data/products";
+import { getProducts } from "../services/productsApi";
+import { Product } from "../types/Product";
 import { Link } from "react-router-dom";
 
 const ProductsPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [productsData, setProductsData] = useState(products);
+  const [products, setProducts] = useState<Product[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const timer = setTimeout(() => {
       try {
-        setProductsData(products);
-        setError(null);
+        getProducts().then((data) => {
+          setProducts(data);
+          setLoading(false);
+        });
       } catch {
         setError("Failed to load products.");
-      } finally {
         setLoading(false);
       }
     }, 400);
