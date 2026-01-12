@@ -13,7 +13,7 @@ namespace CoffeeHub.Api.Mapping
                 Name = product.Name,
                 Price = product.Price,
                 Description = product.Description,
-                ImageUrl = product.ImageUrl
+                Image = product.Image
             };
         }
 
@@ -24,7 +24,7 @@ namespace CoffeeHub.Api.Mapping
                 Name = request.Name,
                 Price = request.Price,
                 Description = request.Description,
-                ImageUrl = request.ImageUrl
+                Image = request.Image
             };
         }
     }

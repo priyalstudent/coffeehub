@@ -7,7 +7,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CoffeeHub.Api.Controllers
 {
-    [Authorize]
+    //[Authorize]
+    [AllowAnonymous]
     [ApiController]
     [Route("api/products")]
     public class ProductsController : ControllerBase

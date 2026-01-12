@@ -30,7 +30,7 @@ namespace CoffeeHub.Api.Services
 
             product.Name = updated.Name;
             product.Price = updated.Price;
-            product.ImageUrl = updated.ImageUrl;
+            product.Image = updated.Image;
             product.Description = updated.Description;
 
             _context.SaveChanges();

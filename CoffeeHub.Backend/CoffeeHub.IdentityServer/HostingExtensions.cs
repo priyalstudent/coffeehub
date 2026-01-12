@@ -28,13 +28,13 @@ namespace CoffeeHub.IdentityServer
                     options.Events.RaiseFailureEvents = true;
                     options.Events.RaiseSuccessEvents = true;
 
-                    // see https://docs.duendesoftware.com/identityserver/v6/fundamentals/resources/
                     options.EmitStaticAudienceClaim = true;
                 })
+                .AddAspNetIdentity<ApplicationUser>()
                 .AddInMemoryIdentityResources(Config.IdentityResources)
                 .AddInMemoryApiScopes(Config.ApiScopes)
-                .AddInMemoryClients(Config.Clients)
-                .AddAspNetIdentity<ApplicationUser>();
+                .AddInMemoryClients(Config.Clients);
+
 
             builder.Services.AddAuthentication()
                 .AddGoogle(options =>

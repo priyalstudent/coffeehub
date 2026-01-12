@@ -22,6 +22,17 @@ namespace CoffeeHub.Api
                     builder.Configuration.GetConnectionString("DefaultConnection")
                 )
             );
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFrontend",
+                    policy =>
+                    {
+                        policy
+                            .WithOrigins("http://localhost:5173", "https://localhost:5173")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
             builder.Services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>
                 {
@@ -41,6 +52,8 @@ namespace CoffeeHub.Api
             }
 
             app.UseHttpsRedirection();
+            app.UseRouting();
+            app.UseCors("AllowFrontend");
             app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();
