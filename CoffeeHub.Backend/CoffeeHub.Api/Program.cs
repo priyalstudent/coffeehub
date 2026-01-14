@@ -1,5 +1,10 @@
+using CoffeeHub.Api.Contracts.Storage;
 using CoffeeHub.Api.Data;
 using CoffeeHub.Api.Services;
+using CoffeeHub.Api.Storage;
+using CoffeeHub.Api.Contracts.Storage;
+using CoffeeHub.Api.Storage.Azure;
+using CoffeeHub.Api.Storage.Options;
 using Microsoft.EntityFrameworkCore;
 
 namespace CoffeeHub.Api
@@ -17,6 +22,8 @@ namespace CoffeeHub.Api
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<ProductService>();
+            builder.Services.AddScoped<CustomerService>();
+            builder.Services.AddScoped<OrderService>();
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(
                     builder.Configuration.GetConnectionString("DefaultConnection")
@@ -41,6 +48,12 @@ namespace CoffeeHub.Api
                 });
 
             builder.Services.AddAuthorization();
+           
+            builder.Services.Configure<ImageStorageOptions>(
+                builder.Configuration.GetSection("ImageStorage"));
+
+            builder.Services.AddScoped<IImageStorage, AzureBlobImageStorage>();
+
 
             var app = builder.Build();
 

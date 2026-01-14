@@ -12,6 +12,9 @@ namespace CoffeeHub.Api.Data
         }
 
         public DbSet<Product> Products { get; set; }
+        public DbSet<Customer> Customers => Set<Customer>();
+        public DbSet<Order> Orders => Set<Order>();
+        public DbSet<OrderItem> OrderItems => Set<OrderItem>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -91,14 +94,21 @@ namespace CoffeeHub.Api.Data
                        Description = "Smooth coffee infused with roasted pistachio flavor for a creamy, nut-forward finish.",
                    }
             );
+
+            modelBuilder.Entity<OrderItem>()
+                .HasKey(oi => new { oi.OrderId, oi.ProductId });
+
+            modelBuilder.Entity<Order>()
+                .Property(o => o.TotalAmount)
+                .HasPrecision(10, 2);
+
+            modelBuilder.Entity<OrderItem>()
+                .Property(oi => oi.UnitPrice)
+                .HasPrecision(10, 2);
+
+            modelBuilder.Entity<Product>()
+                .Property(p => p.Price)
+                .HasPrecision(8, 2);
         }
-
-
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<Product>()
-        //        .Property(p => p.Price)
-        //        .HasPrecision(8, 2);
-        //}
     }
 }

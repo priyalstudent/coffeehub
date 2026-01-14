@@ -70,16 +70,10 @@ namespace CoffeeHub.IdentityServer
                         AllowedGrantTypes = GrantTypes.Code,
                         RequirePkce = true,
                         RequireClientSecret = false,
-
-                        RedirectUris =
-                        {
-                            "http://localhost:5173/callback"
-                        },
-
-                        PostLogoutRedirectUris =
-                        {
-                          "http://localhost:5173/"
-                        },
+                    
+                        PostLogoutRedirectUris = { "http://localhost:5173/", "http://localhost:5173/login"},
+                        AllowedCorsOrigins = {"http://localhost:5173" },
+                        RedirectUris = { "http://localhost:5173/callback" },
 
                         AllowedScopes =
                         {

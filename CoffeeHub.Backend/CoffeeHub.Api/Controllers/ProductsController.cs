@@ -1,4 +1,5 @@
 ﻿using CoffeeHub.Api.Contracts.Products;
+using CoffeeHub.Api.Contracts.Storage;
 using CoffeeHub.Api.Mapping;
 using CoffeeHub.Api.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -14,9 +15,11 @@ namespace CoffeeHub.Api.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly ProductService _productService;
-        public ProductsController(ProductService productService)
+        private readonly IImageStorage _imageStorage;
+        public ProductsController(ProductService productService, IImageStorage imageStorage)
         {
             _productService = productService;
+            _imageStorage = imageStorage;
         }
 
         [HttpGet]
@@ -71,5 +74,32 @@ namespace CoffeeHub.Api.Controllers
 
             return NoContent();
         }
+
+        [HttpPost("{id}/image")]
+        public async Task<IActionResult> UploadProductImage(
+            int id,
+            IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+                return BadRequest("No file uploaded");
+
+            var product = _productService.GetById(id);
+            if (product == null)
+                return NotFound();
+
+            var fileName = $"product-{id}-{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+
+            var imageUrl = await _imageStorage.UploadAsync(
+                file.OpenReadStream(),
+                fileName,
+                file.ContentType
+            );
+
+            product.Image = imageUrl;
+            _productService.Update(product);
+
+            return Ok(new { imageUrl });
+        }
+
     }
 }
