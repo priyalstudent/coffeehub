@@ -31,13 +31,16 @@ namespace CoffeeHub.Api.Storage.Azure
 
             await blobClient.UploadAsync(
                 fileStream,
-                new BlobHttpHeaders
+                new BlobUploadOptions
                 {
-                    ContentType = contentType
-                },
-                overwrite: true);
+                    HttpHeaders = new BlobHttpHeaders
+                    {
+                        ContentType = contentType
+                    }
 
+                });
             return blobClient.Uri.ToString();
+
         }
     }
 }

@@ -37,7 +37,8 @@ namespace CoffeeHub.Api
                         policy
                             .WithOrigins("http://localhost:5173", "https://localhost:5173")
                             .AllowAnyHeader()
-                            .AllowAnyMethod();
+                            .AllowAnyMethod()
+                            .AllowCredentials();
                     });
             });
             builder.Services.AddAuthentication("Bearer")
@@ -53,7 +54,6 @@ namespace CoffeeHub.Api
                 builder.Configuration.GetSection("ImageStorage"));
 
             builder.Services.AddScoped<IImageStorage, AzureBlobImageStorage>();
-
 
             var app = builder.Build();
 

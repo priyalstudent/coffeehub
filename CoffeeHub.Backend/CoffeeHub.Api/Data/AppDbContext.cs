@@ -26,7 +26,7 @@ namespace CoffeeHub.Api.Data
                     Id = 1,
                     Name = "Classic Espresso",
                     Price = 6.99m,
-                    Image = "espresso.png",
+                    Image = "https://coffeehubimg02.blob.core.windows.net/product-images/ExpressoCoffee.png",
                     Description = "A rich and bold espresso made from premium Arabica beans, perfect for strong coffee lovers."
                 },
                 new Product
@@ -34,15 +34,15 @@ namespace CoffeeHub.Api.Data
                     Id = 2,
                     Name = "Hazelnut Coffee",
                     Price = 7.49m,
-                    Image = "hazelnut.png",
-                    Description = "Smooth coffee infused with warm hazelnut notes for a nutty and comforting flavor.\",\r\n  },"
+                    Image = "https://coffeehubimg02.blob.core.windows.net/product-images/HazelnutCoffee.png",
+                    Description = "Smooth coffee infused with warm hazelnut notes for a nutty and comforting flavor."
                 },
                 new Product
                 {
                     Id = 3,
                     Name = "Vanilla Brew",
                     Price = 7.29m,
-                    Image = "vanilla.png",
+                    Image = "https://coffeehubimg02.blob.core.windows.net/product-images/VanilaCoffee.png",
                     Description = "A balanced coffee blend with subtle vanilla sweetness for a smooth, aromatic cup."
                 },
                 new Product
@@ -50,7 +50,7 @@ namespace CoffeeHub.Api.Data
                      Id = 4,
                      Name = "Caramel Roast",
                      Price = 7.59m,
-                     Image = "caramel.png",
+                     Image = "https://coffeehubimg02.blob.core.windows.net/product-images/CaramelCoffee.png",
                      Description = "Medium-roasted coffee with buttery caramel undertones and a naturally sweet finish.",
                 },
                  new Product
@@ -58,7 +58,7 @@ namespace CoffeeHub.Api.Data
                      Id = 5,
                      Name = "Mocha Blend",
                      Price = 7.89m,
-                     Image = "mocha.png",
+                     Image = "https://coffeehubimg02.blob.core.windows.net/product-images/MochaCoffee.png",
                      Description = "A deep coffee blend combined with chocolate notes for a rich and indulgent taste.",
                  },
                  new Product
@@ -66,7 +66,7 @@ namespace CoffeeHub.Api.Data
                      Id = 6,
                      Name = "Chocolate Raspberry",
                      Price = 8.29m,
-                     Image = "chocoRaspberry.png",
+                     Image = "https://coffeehubimg02.blob.core.windows.net/product-images/ChocRaspberryCoffee.png",
                      Description = "A bold coffee infused with dark chocolate and fruity raspberry accents for a unique twist.",
                  },
                  new Product
@@ -74,7 +74,7 @@ namespace CoffeeHub.Api.Data
                      Id = 7,
                      Name = "Raw Mango",
                      Price = 7.99m,
-                     Image = "mango.png",
+                     Image = "https://coffeehubimg02.blob.core.windows.net/product-images/MangoCoffee.png",
                      Description = "A refreshing coffee blend with tangy raw mango notes for an unexpected, vibrant flavor.",
                  },
                   new Product
@@ -82,7 +82,7 @@ namespace CoffeeHub.Api.Data
                       Id = 8,
                       Name = "Pineapple Delight",
                       Price = 7.79m,
-                      Image = "pineapple.png",
+                      Image = "https://coffeehubimg02.blob.core.windows.net/product-images/PineappleCoffee.png",
                       Description = "Light coffee with tropical pineapple hints, delivering a bright and refreshing taste.",
                   },
                    new Product
@@ -90,7 +90,7 @@ namespace CoffeeHub.Api.Data
                        Id = 9,
                        Name = "Royal Pistachio",
                        Price = 8.49m,
-                       Image = "pistachio.png",
+                       Image = "https://coffeehubimg02.blob.core.windows.net/product-images/PistachioCoffee.png",
                        Description = "Smooth coffee infused with roasted pistachio flavor for a creamy, nut-forward finish.",
                    }
             );
