@@ -6,6 +6,7 @@ using CoffeeHub.Api.Contracts.Storage;
 using CoffeeHub.Api.Storage.Azure;
 using CoffeeHub.Api.Storage.Options;
 using Microsoft.EntityFrameworkCore;
+//using Stripe;
 
 namespace CoffeeHub.Api
 {
@@ -64,6 +65,7 @@ namespace CoffeeHub.Api
                 builder.Configuration.GetSection("ImageStorage"));
 
             builder.Services.AddScoped<IImageStorage, AzureBlobImageStorage>();
+            Stripe.StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
 
             var app = builder.Build();
 
