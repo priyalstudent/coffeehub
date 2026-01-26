@@ -9,6 +9,9 @@
 *.cache
 *.dll
 *.pdb
+*.csproj.user
+Properties/PublishProfiles/
+Properties/ServiceDependencies/
 
 # =========================
 # Node / Frontend
