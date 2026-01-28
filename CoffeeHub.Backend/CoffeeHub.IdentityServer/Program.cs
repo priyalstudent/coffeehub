@@ -1,5 +1,7 @@
 ﻿using CoffeeHub.IdentityServer;
+using CoffeeHub.IdentityServer.Data;
 using Serilog;
+using Microsoft.EntityFrameworkCore;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -21,6 +23,13 @@ try
     var app = builder
         .ConfigureServices()
         .ConfigurePipeline();
+
+    using (var scope = app.Services.CreateScope())
+    {
+        var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        db.Database.Migrate();
+    }
+
 
     // this seeding is only for the template to bootstrap the DB and users.
     // in production you will likely want a different approach.

@@ -13,10 +13,9 @@ namespace CoffeeHub.Api.Mapping
                 OrderDate = order.OrderDate,
                 TotalAmount = order.TotalAmount,
                 CustomerId = order.CustomerId,
-                CustomerName = $"{order.Customer.FirstName} {order.Customer.LastName}",
+                CustomerName = order.Customer.FirstName + " " + order.Customer.LastName,
                 Items = order.OrderItems.Select(oi => new OrderItemResponseContract
                 {
-                    ProductId = oi.ProductId,
                     ProductName = oi.Product.Name,
                     Quantity = oi.Quantity,
                     UnitPrice = oi.UnitPrice
@@ -28,7 +27,6 @@ namespace CoffeeHub.Api.Mapping
         {
             return new Order
             {
-                CustomerId = request.CustomerId,
                 OrderDate = DateTime.UtcNow,
                 OrderItems = request.Items.Select(item => new OrderItem
                 {

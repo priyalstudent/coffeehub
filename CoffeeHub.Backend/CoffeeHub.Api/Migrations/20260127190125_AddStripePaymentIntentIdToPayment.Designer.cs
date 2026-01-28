@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoffeeHub.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260125122228_UpdateProductImages")]
-    partial class UpdateProductImages
+    [Migration("20260127190125_AddStripePaymentIntentIdToPayment")]
+    partial class AddStripePaymentIntentIdToPayment
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -83,6 +83,9 @@ namespace CoffeeHub.Api.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ProductId1")
+                        .HasColumnType("int");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
@@ -92,7 +95,44 @@ namespace CoffeeHub.Api.Migrations
 
                     b.HasKey("OrderId", "ProductId");
 
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("ProductId1");
+
                     b.ToTable("OrderItems");
+                });
+
+            modelBuilder.Entity("CoffeeHub.Api.Models.Payment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StripePaymentIntentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("CoffeeHub.Api.Models.Product", b =>
@@ -218,14 +258,29 @@ namespace CoffeeHub.Api.Migrations
                         .IsRequired();
 
                     b.HasOne("CoffeeHub.Api.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CoffeeHub.Api.Models.Product", null)
                         .WithMany("OrderItems")
+                        .HasForeignKey("ProductId1");
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("CoffeeHub.Api.Models.Payment", b =>
+                {
+                    b.HasOne("CoffeeHub.Api.Models.Order", "Order")
+                        .WithMany()
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Order");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("CoffeeHub.Api.Models.Customer", b =>

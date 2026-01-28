@@ -2,10 +2,10 @@ using CoffeeHub.Api.Contracts.Storage;
 using CoffeeHub.Api.Data;
 using CoffeeHub.Api.Services;
 using CoffeeHub.Api.Storage;
-using CoffeeHub.Api.Contracts.Storage;
 using CoffeeHub.Api.Storage.Azure;
 using CoffeeHub.Api.Storage.Options;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 //using Stripe;
 
 namespace CoffeeHub.Api
@@ -53,14 +53,18 @@ namespace CoffeeHub.Api
             });
 
             builder.Services.AddAuthentication("Bearer")
-                .AddJwtBearer("Bearer", options =>
-                {
-                    options.Authority = "https://localhost:5001";
-                    options.TokenValidationParameters.ValidateAudience = false;
-                });
+    .AddJwtBearer("Bearer", options =>
+    {
+        options.Authority = "https://coffeehub-identity-erdyavdqfdcsdbac.francecentral-01.azurewebsites.net";
+
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateAudience = false // TEMPORARILY disable audience check
+        };
+    });
 
             builder.Services.AddAuthorization();
-           
+
             builder.Services.Configure<ImageStorageOptions>(
                 builder.Configuration.GetSection("ImageStorage"));
 

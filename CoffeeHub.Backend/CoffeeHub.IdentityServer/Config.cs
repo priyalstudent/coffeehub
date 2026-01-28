@@ -64,16 +64,31 @@ namespace CoffeeHub.IdentityServer
 
                 new Client
                 {
+                    ClientId = "coffeehub.client",
+                    ClientSecrets = { new Secret("secret".Sha256()) },
+
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+
+                    AllowedScopes =
+                    {
+                        "openid",
+                        "profile",
+                        "coffeehub.api"
+                    }
+                },
+
+                new Client
+                {
                         ClientId = "coffeehub-react",
                         ClientName = "CoffeeHub React App",
 
                         AllowedGrantTypes = GrantTypes.Code,
                         RequirePkce = true,
                         RequireClientSecret = false,
-                    
-                        PostLogoutRedirectUris = { "http://localhost:5173/", "http://localhost:5173/login"},
-                        AllowedCorsOrigins = {"http://localhost:5173" },
-                        RedirectUris = { "http://localhost:5173/callback" },
+
+                        RedirectUris = { "https://coffeehub-frontend-web-e9b4exbufwfxh8bn.francecentral-01.azurewebsites.net/callback" },
+                        AllowedCorsOrigins = {"https://coffeehub-frontend-web-e9b4exbufwfxh8bn.francecentral-01.azurewebsites.net"},
+                        PostLogoutRedirectUris = { "https://coffeehub-frontend-web-e9b4exbufwfxh8bn.francecentral-01.azurewebsites.net/"},
 
                         AllowedScopes =
                         {

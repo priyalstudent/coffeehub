@@ -1,0 +1,35 @@
+﻿@page
+@model CoffeeHub.IdentityServer.Pages.Account.Register.IndexModel
+
+<h2>Register</h2>
+
+<form method="post">
+    <div>
+        <label>Username</label>
+        <input asp-for="Input.Username" />
+    </div>
+
+    <div>
+        <label>Email</label>
+        <input asp-for="Input.Email" />
+    </div>
+
+    <div>
+        <label>Password</label>
+        <input asp-for="Input.Password" type="password" />
+    </div>
+
+    <div>
+        <label>Confirm Password</label>
+        <input asp-for="Input.ConfirmPassword" type="password" />
+    </div>
+
+    <button type="submit">Register</button>
+
+    <div style="color:red">
+        @foreach (var error in Model.Errors)
+        {
+            <div>@error</div>
+        }
+    </div>
+</form>

@@ -15,6 +15,8 @@ namespace CoffeeHub.Api.Models
         [Required, EmailAddress]
         public string Email { get; set; } = null!;
 
+        [Required]
+        public string IdentityUserId { get; set; } = null!;
         public ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 }

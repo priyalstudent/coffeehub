@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoffeeHub.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260113120412_InitialCreate")]
+    [Migration("20260127174713_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace CoffeeHub.Api.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.22")
+                .HasAnnotation("ProductVersion", "8.0.23")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -83,6 +83,9 @@ namespace CoffeeHub.Api.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ProductId1")
+                        .HasColumnType("int");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
@@ -91,6 +94,10 @@ namespace CoffeeHub.Api.Migrations
                         .HasColumnType("decimal(10,2)");
 
                     b.HasKey("OrderId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("ProductId1");
 
                     b.ToTable("OrderItems");
                 });
@@ -128,15 +135,15 @@ namespace CoffeeHub.Api.Migrations
                         {
                             Id = 1,
                             Description = "A rich and bold espresso made from premium Arabica beans, perfect for strong coffee lovers.",
-                            Image = "espresso.png",
+                            Image = "https://coffeehubimg02.blob.core.windows.net/product-images/ExpressoCoffee.png",
                             Name = "Classic Espresso",
                             Price = 6.99m
                         },
                         new
                         {
                             Id = 2,
-                            Description = "Smooth coffee infused with warm hazelnut notes for a nutty and comforting flavor.\",\r\n  },",
-                            Image = "hazelnut.png",
+                            Description = "Smooth coffee infused with warm hazelnut notes for a nutty and comforting flavor.",
+                            Image = "https://coffeehubimg02.blob.core.windows.net/product-images/HazelnutCoffee.png",
                             Name = "Hazelnut Coffee",
                             Price = 7.49m
                         },
@@ -144,7 +151,7 @@ namespace CoffeeHub.Api.Migrations
                         {
                             Id = 3,
                             Description = "A balanced coffee blend with subtle vanilla sweetness for a smooth, aromatic cup.",
-                            Image = "vanilla.png",
+                            Image = "https://coffeehubimg02.blob.core.windows.net/product-images/VanilaCoffee.png",
                             Name = "Vanilla Brew",
                             Price = 7.29m
                         },
@@ -152,7 +159,7 @@ namespace CoffeeHub.Api.Migrations
                         {
                             Id = 4,
                             Description = "Medium-roasted coffee with buttery caramel undertones and a naturally sweet finish.",
-                            Image = "caramel.png",
+                            Image = "https://coffeehubimg02.blob.core.windows.net/product-images/CaramelCoffee.png",
                             Name = "Caramel Roast",
                             Price = 7.59m
                         },
@@ -160,7 +167,7 @@ namespace CoffeeHub.Api.Migrations
                         {
                             Id = 5,
                             Description = "A deep coffee blend combined with chocolate notes for a rich and indulgent taste.",
-                            Image = "mocha.png",
+                            Image = "https://coffeehubimg02.blob.core.windows.net/product-images/MochaCoffee.png",
                             Name = "Mocha Blend",
                             Price = 7.89m
                         },
@@ -168,7 +175,7 @@ namespace CoffeeHub.Api.Migrations
                         {
                             Id = 6,
                             Description = "A bold coffee infused with dark chocolate and fruity raspberry accents for a unique twist.",
-                            Image = "chocoRaspberry.png",
+                            Image = "https://coffeehubimg02.blob.core.windows.net/product-images/ChocRaspberryCoffee.png",
                             Name = "Chocolate Raspberry",
                             Price = 8.29m
                         },
@@ -176,7 +183,7 @@ namespace CoffeeHub.Api.Migrations
                         {
                             Id = 7,
                             Description = "A refreshing coffee blend with tangy raw mango notes for an unexpected, vibrant flavor.",
-                            Image = "mango.png",
+                            Image = "https://coffeehubimg02.blob.core.windows.net/product-images/MangoCoffee.png",
                             Name = "Raw Mango",
                             Price = 7.99m
                         },
@@ -184,7 +191,7 @@ namespace CoffeeHub.Api.Migrations
                         {
                             Id = 8,
                             Description = "Light coffee with tropical pineapple hints, delivering a bright and refreshing taste.",
-                            Image = "pineapple.png",
+                            Image = "https://coffeehubimg02.blob.core.windows.net/product-images/PineappleCoffee.png",
                             Name = "Pineapple Delight",
                             Price = 7.79m
                         },
@@ -192,7 +199,7 @@ namespace CoffeeHub.Api.Migrations
                         {
                             Id = 9,
                             Description = "Smooth coffee infused with roasted pistachio flavor for a creamy, nut-forward finish.",
-                            Image = "pistachio.png",
+                            Image = "https://coffeehubimg02.blob.core.windows.net/product-images/PistachioCoffee.png",
                             Name = "Royal Pistachio",
                             Price = 8.49m
                         });
@@ -218,10 +225,14 @@ namespace CoffeeHub.Api.Migrations
                         .IsRequired();
 
                     b.HasOne("CoffeeHub.Api.Models.Product", "Product")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("OrderId")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("CoffeeHub.Api.Models.Product", null)
+                        .WithMany("OrderItems")
+                        .HasForeignKey("ProductId1");
 
                     b.Navigation("Order");
 

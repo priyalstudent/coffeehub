@@ -1,6 +1,7 @@
 ﻿using CoffeeHub.Api.Data;
 using CoffeeHub.Api.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace CoffeeHub.Api.Services
 {
@@ -15,6 +16,12 @@ namespace CoffeeHub.Api.Services
 
         public Order Create(Order order)
         {
+            var customer = _db.Customers.FirstOrDefault(c => c.Id == order.CustomerId);
+            if (customer == null)
+                throw new InvalidOperationException("Customer not found");
+
+            order.Customer = customer; // 👈 THIS LINE FIXES IT
+
             foreach (var item in order.OrderItems)
             {
                 var product = _db.Products.FirstOrDefault(p => p.Id == item.ProductId);
@@ -37,6 +44,7 @@ namespace CoffeeHub.Api.Services
                    .ThenInclude(oi => oi.Product)
                .FirstOrDefault(o => o.Id == order.Id);
         }
+
 
         public List<Order> GetAll()
         {
@@ -96,5 +104,29 @@ namespace CoffeeHub.Api.Services
             return true;
         }
 
+        public int GetCustomerIdByIdentitySub(string sub, ClaimsPrincipal user)
+        {
+            var customer = _db.Customers.FirstOrDefault(c => c.IdentityUserId == sub);
+
+            if (customer == null)
+            {
+                var email = user.Claims.FirstOrDefault(c => c.Type == "email")?.Value
+                            ?? user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value
+                            ?? "temp@coffeehub.com";
+
+                customer = new Customer
+                {
+                    IdentityUserId = sub,
+                    Email = email,
+                    FirstName = "New",
+                    LastName = "User"
+                };
+
+                _db.Customers.Add(customer);
+                _db.SaveChanges();
+            }
+
+            return customer.Id;
+        }
     }
 }

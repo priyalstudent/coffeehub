@@ -1,12 +1,16 @@
 ﻿using CoffeeHub.Api.Contracts.Orders;
 using CoffeeHub.Api.Mapping;
 using CoffeeHub.Api.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using System.Security.Claims;
 
 namespace CoffeeHub.Api.Controllers
 {
     [ApiController]
     [Route("api/orders")]
+    [Authorize]
     public class OrdersController : ControllerBase
     {
         private readonly OrderService _orderService;
@@ -36,14 +40,23 @@ namespace CoffeeHub.Api.Controllers
         [HttpPost]
         public IActionResult Create(OrderRequestContract request)
         {
+            var userSub = User.FindFirst(ClaimTypes.NameIdentifier)?.Value
+                       ?? User.FindFirst("sub")?.Value;
+
+            if (userSub == null)
+                return Unauthorized("No user id in token");
+
             var order = request.ToModel();
+
+            var customerId = _orderService.GetCustomerIdByIdentitySub(userSub, User);
+
+            order.CustomerId = customerId;  
+
             var created = _orderService.Create(order);
 
-            return CreatedAtAction(
-                nameof(GetById),
+            return CreatedAtAction(nameof(GetById),
                 new { id = created.Id },
-                created.ToResponse()
-            );
+                created.ToResponse());
         }
 
         [HttpPut("{id}")]
