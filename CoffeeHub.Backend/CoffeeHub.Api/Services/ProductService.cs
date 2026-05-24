@@ -12,9 +12,16 @@ namespace CoffeeHub.Api.Services
             _context = context;
         }
 
-        public List<Product> GetProducts()
+        public IEnumerable<Product> GetProducts(string? search = null)
         {
-            return _context.Products.ToList();
+            IQueryable<Product> query = _context.Products;
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                query = query.Where(p =>
+                    p.Name.Contains(search) ||
+                    p.Description.Contains(search));
+            }
+            return query.ToList();
         }
 
         public Product? GetById(int id)

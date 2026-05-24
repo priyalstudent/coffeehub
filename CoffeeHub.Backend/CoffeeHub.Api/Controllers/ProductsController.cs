@@ -9,7 +9,8 @@ using Microsoft.EntityFrameworkCore;
 namespace CoffeeHub.Api.Controllers
 {
     //[Authorize]
-    [AllowAnonymous]
+    //[AllowAnonymous]
+    [Authorize]
     [ApiController]
     [Route("api/products")]
     public class ProductsController : ControllerBase
@@ -22,13 +23,17 @@ namespace CoffeeHub.Api.Controllers
             _imageStorage = imageStorage;
         }
 
+        //anyone can browse
+        [AllowAnonymous]
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetAll([FromQuery] string? search)
         {
-            var products = _productService.GetProducts();
+            var products = _productService.GetProducts(search);
             return Ok(products.Select(p => p.ToResponse()));
         }
 
+        // anyone can view
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
@@ -40,6 +45,8 @@ namespace CoffeeHub.Api.Controllers
             return Ok(product.ToResponse());
         }
 
+        //only admin
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public IActionResult Create(ProductRequestContract request)
         {
@@ -52,6 +59,7 @@ namespace CoffeeHub.Api.Controllers
             );
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
         public IActionResult Update(int id, ProductRequestContract request)
         {
@@ -64,6 +72,7 @@ namespace CoffeeHub.Api.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
@@ -75,6 +84,7 @@ namespace CoffeeHub.Api.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost("{id}/image")]
         public async Task<IActionResult> UploadProductImage(
             int id,

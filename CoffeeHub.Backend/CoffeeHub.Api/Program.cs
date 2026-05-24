@@ -6,6 +6,7 @@ using CoffeeHub.Api.Storage.Azure;
 using CoffeeHub.Api.Storage.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+
 //using Stripe;
 
 namespace CoffeeHub.Api
@@ -25,19 +26,9 @@ namespace CoffeeHub.Api
             builder.Services.AddScoped<ProductService>();
             builder.Services.AddScoped<CustomerService>();
             builder.Services.AddScoped<OrderService>();
+            builder.Services.AddSingleton<ContactMessageCosmosService>();
             builder.Services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(
-                    builder.Configuration.GetConnectionString("DefaultConnection"),
-                    sqlOptions =>           //waits a few seconds if the DB is “waking up”
-                    {
-                        sqlOptions.EnableRetryOnFailure(
-                            maxRetryCount: 5,
-                            maxRetryDelay: TimeSpan.FromSeconds(10),
-                            errorNumbersToAdd: null
-                        );
-                    }
-                )
-            );
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddCors(options =>
             {
@@ -59,7 +50,7 @@ namespace CoffeeHub.Api
 
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidateAudience = false // TEMPORARILY disable audience check
+            ValidateAudience = false 
         };
     });
 

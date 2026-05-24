@@ -1,10 +1,12 @@
 ﻿using CoffeeHub.Api.Contracts.Customers;
 using CoffeeHub.Api.Mapping;
 using CoffeeHub.Api.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoffeeHub.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/customers")]
     public class CustomersController : ControllerBase
@@ -16,6 +18,7 @@ namespace CoffeeHub.Api.Controllers
             _customerService = customerService;
         }
 
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public IActionResult GetAll()
         {

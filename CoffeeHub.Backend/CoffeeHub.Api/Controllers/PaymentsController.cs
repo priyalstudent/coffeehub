@@ -22,7 +22,7 @@ namespace CoffeeHub.Api.Controllers
 
         [AllowAnonymous]
         [HttpPost("create-payment")]
-        public IActionResult CreatePayment([FromBody] CreatePaymentRequest request)
+        public async Task<IActionResult> CreatePayment([FromBody] CreatePaymentRequest request)
         {
             StripeConfiguration.ApiKey = _configuration["Stripe:SecretKey"];
 
@@ -41,14 +41,13 @@ namespace CoffeeHub.Api.Controllers
 
             var payment = new Payment
             {
-                //OrderId = request.OrderId,
                 Amount = request.Amount,
                 Status = "Pending",
                 StripePaymentIntentId = intent.Id
             };
 
-            //_db.Payments.Add(payment);
-            //_db.SaveChanges();
+            _db.Payments.Add(payment);
+            await _db.SaveChangesAsync();
 
             return Ok(new { clientSecret = intent.ClientSecret });
         }
