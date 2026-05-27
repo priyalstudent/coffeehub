@@ -36,7 +36,7 @@ namespace CoffeeHub.Api
                 {
                     policy
                         .WithOrigins(
-                            "https://coffeehub-frontend-web-e9b4exbufwfxh8bn.francecentral-01.azurewebsites.net"
+                            "https://thankful-bush-00bbe7e03.7.azurestaticapps.net"
                         )
                         .AllowAnyHeader()
                         .AllowAnyMethod();
@@ -46,7 +46,7 @@ namespace CoffeeHub.Api
             builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
     {
-        options.Authority = "https://coffeehub-identity-erdyavdqfdcsdbac.francecentral-01.azurewebsites.net";
+        options.Authority = "https://coffeehub-identity-fea4crgrhna8f8eq.francecentral-01.azurewebsites.net";
 
         options.TokenValidationParameters = new TokenValidationParameters
         {

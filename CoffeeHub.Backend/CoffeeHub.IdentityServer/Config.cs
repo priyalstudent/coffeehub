@@ -79,25 +79,32 @@ namespace CoffeeHub.IdentityServer
 
                 new Client
                 {
-                        ClientId = "coffeehub-react",
-                        ClientName = "CoffeeHub React App",
+                    ClientId = "coffeehub-react",
+                    ClientName = "CoffeeHub React App",
 
-                        AllowedGrantTypes = GrantTypes.Code,
-                        RequirePkce = true,
-                        RequireClientSecret = false,
+                    AllowedGrantTypes = GrantTypes.Code,
+                    RequirePkce = true,
+                    RequireClientSecret = false,
 
-                        RedirectUris = { "https://coffeehub-frontend-web-e9b4exbufwfxh8bn.francecentral-01.azurewebsites.net/callback" },
-                        AllowedCorsOrigins = {"https://coffeehub-frontend-web-e9b4exbufwfxh8bn.francecentral-01.azurewebsites.net"},
-                        PostLogoutRedirectUris = { "https://coffeehub-frontend-web-e9b4exbufwfxh8bn.francecentral-01.azurewebsites.net/"},
-
-                        AllowedScopes =
-                        {
-                            "openid",
-                            "profile",
-                            "coffeehub.api"
-                        },
-
-                        AllowAccessTokensViaBrowser = true
+                    RedirectUris = {
+                        "https://thankful-bush-00bbe7e03.7.azurestaticapps.net/callback",
+                        "https://localhost:5173/callback"
+                    },
+                    AllowedCorsOrigins = {
+                        "https://thankful-bush-00bbe7e03.7.azurestaticapps.net",
+                        "https://localhost:5173"
+                    },
+                    PostLogoutRedirectUris = {
+                        "https://thankful-bush-00bbe7e03.7.azurestaticapps.net/",
+                        "https://localhost:5173/"
+                    },
+                    AllowedScopes =
+                    {
+                        "openid",
+                        "profile",
+                        "coffeehub.api"
+                    },
+                    AllowAccessTokensViaBrowser = true
                 }
 
             };
