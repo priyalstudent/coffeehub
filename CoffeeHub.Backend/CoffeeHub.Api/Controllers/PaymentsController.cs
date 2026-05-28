@@ -39,15 +39,15 @@ namespace CoffeeHub.Api.Controllers
             var service = new PaymentIntentService();
             var intent = service.Create(options);
 
-            var payment = new Payment
-            {
-                Amount = request.Amount,
-                Status = "Pending",
-                StripePaymentIntentId = intent.Id
-            };
+            //var payment = new Payment
+            //{
+            //    Amount = request.Amount,
+            //    Status = "Pending",
+            //    StripePaymentIntentId = intent.Id
+            //};
 
-            _db.Payments.Add(payment);
-            await _db.SaveChangesAsync();
+            //_db.Payments.Add(payment);
+            //await _db.SaveChangesAsync();
 
             return Ok(new { clientSecret = intent.ClientSecret });
         }
