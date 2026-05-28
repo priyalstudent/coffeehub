@@ -55,6 +55,21 @@ namespace CoffeeHub.Api.Services
                 .ToList();
         }
 
+        public List<Order> GetOrdersByIdentitySub(string sub)
+        {
+            var customer = _db.Customers.FirstOrDefault(c => c.IdentityUserId == sub);
+
+            if (customer == null)
+                return new List<Order>();
+
+            return _db.Orders
+                .Include(o => o.Customer)
+                .Include(o => o.OrderItems)
+                    .ThenInclude(oi => oi.Product)
+                .Where(o => o.CustomerId == customer.Id)
+                .ToList();
+        }
+
         public Order? GetById(int id)
         {
             return _db.Orders

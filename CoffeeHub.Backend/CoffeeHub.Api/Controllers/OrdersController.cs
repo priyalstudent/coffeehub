@@ -23,7 +23,21 @@ namespace CoffeeHub.Api.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var orders = _orderService.GetAll();
+            var userSub = User.FindFirst(ClaimTypes.NameIdentifier)?.Value
+                       ?? User.FindFirst("sub")?.Value;
+
+            if (userSub == null)
+                return Unauthorized();
+
+            var isAdmin = userSub == "0be1b595-6a44-43d2-89ab-bb6d8d4250fc";
+
+            if (isAdmin)
+            {
+                var allOrders = _orderService.GetAll();
+                return Ok(allOrders.Select(o => o.ToResponse()));
+            }
+
+            var orders = _orderService.GetOrdersByIdentitySub(userSub);
             return Ok(orders.Select(o => o.ToResponse()));
         }
 
