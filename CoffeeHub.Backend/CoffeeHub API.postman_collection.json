@@ -1,0 +1,201 @@
+{
+  "info": {
+    "_postman_id": "76dd0fc8-a3e7-4812-8cb2-2a6c0c6eda03",
+    "name": "CoffeeHub API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "49573494",
+    "_collection_link": "https://go.postman.co/collection/49573494-76dd0fc8-a3e7-4812-8cb2-2a6c0c6eda03?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Get ALL Products",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://coffeehub-api-ckahexhzf9cecaev.francecentral-01.azurewebsites.net/api/products",
+          "protocol": "https",
+          "host": [
+            "coffeehub-api-ckahexhzf9cecaev",
+            "francecentral-01",
+            "azurewebsites",
+            "net"
+          ],
+          "path": [
+            "api",
+            "products"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get ALL Orders",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "YOUR_TOKEN_HERE",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://coffeehub-api-ckahexhzf9cecaev.francecentral-01.azurewebsites.net/api/orders",
+          "protocol": "https",
+          "host": [
+            "coffeehub-api-ckahexhzf9cecaev",
+            "francecentral-01",
+            "azurewebsites",
+            "net"
+          ],
+          "path": [
+            "api",
+            "orders"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Payment",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"amount\": 10.00\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://coffeehub-api-ckahexhzf9cecaev.francecentral-01.azurewebsites.net/api/Payments/create-payment",
+          "protocol": "https",
+          "host": [
+            "coffeehub-api-ckahexhzf9cecaev",
+            "francecentral-01",
+            "azurewebsites",
+            "net"
+          ],
+          "path": [
+            "api",
+            "Payments",
+            "create-payment"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Send Contact Message",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "Get Product By Id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://coffeehub-api-ckahexhzf9cecaev.francecentral-01.azurewebsites.net/api/products/1",
+          "protocol": "https",
+          "host": [
+            "coffeehub-api-ckahexhzf9cecaev",
+            "francecentral-01",
+            "azurewebsites",
+            "net"
+          ],
+          "path": [
+            "api",
+            "products",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Product (Admin)",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "YOUR_TOKEN_HERE",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://coffeehub-api-ckahexhzf9cecaev.francecentral-01.azurewebsites.net/api/products",
+          "protocol": "https",
+          "host": [
+            "coffeehub-api-ckahexhzf9cecaev",
+            "francecentral-01",
+            "azurewebsites",
+            "net"
+          ],
+          "path": [
+            "api",
+            "products"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Stripe Webhook",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"type\": \"payment_intent.succeeded\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://coffeehub-api-ckahexhzf9cecaev.francecentral-01.azurewebsites.net/api/Payments/webhook",
+          "protocol": "https",
+          "host": [
+            "coffeehub-api-ckahexhzf9cecaev",
+            "francecentral-01",
+            "azurewebsites",
+            "net"
+          ],
+          "path": [
+            "api",
+            "Payments",
+            "webhook"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
