@@ -62,6 +62,8 @@ namespace CoffeeHub.Api
             builder.Services.AddScoped<IImageStorage, AzureBlobImageStorage>();
             Stripe.StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
 
+            builder.Services.AddHttpClient();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
